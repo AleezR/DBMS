@@ -1,0 +1,65 @@
+1. CREATE DATABASE
+use hospital
+//switched to db hospital
+db.createCollection("patients")
+//{ ok: 1 }
+show dbs
+/*admin     40.00 KiB
+config    72.00 KiB
+hospital   8.00 KiB
+local     40.00 KiB
+*/
+2. DROP DATABASE
+db.dropDatabase()
+//{ ok: 1, dropped: 'hospital' }
+show dbs
+/*admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+*/
+
+
+3.CRUD OPERATIONS
+1.CREATE=
+db.patients.insertOne({"NAME":"SPONGEBOB",
+  "PATIENT_ID":101,
+  "AGE":22,
+  "DISEASE":"DIABETES",
+  "DOCTOR":"DR.RAVI"            
+})
+
+db.patients.insertMany([{},{},{}])
+
+db.patients.insertMany([
+  { name: "Helen", age: 20, disease: "Fever", city: "Kochi" },
+  { name: "Rahul", age: 32, disease: "Diabetes", city: "Delhi" },
+  { name: "Anjali", age: 25, disease: "Cold", city: "Mumbai" },
+  { name: "Suresh", age: 45, disease: "Hypertension", city: "Chennai" },
+  { name: "Meera", age: 29, disease: "Asthma", city: "Bangalore" }
+])
+db.doctors.insertMany([
+  { name: "Dr. Kumar", specialization: "General Physician", experience: 10 },
+  { name: "Dr. Mehta", specialization: "Cardiologist", experience: 15 },
+  { name: "Dr. Sharma", specialization: "Dermatologist", experience: 8 },
+  { name: "Dr. Nair", specialization: "Pulmonologist", experience: 12 },
+  { name: "Dr. Reddy", specialization: "Endocrinologist", experience: 14 }
+])
+db.appointments.insertMany([
+  { patient: "Helen", doctor: "Dr. Kumar", date: "2026-03-24", status: "Completed" },
+  { patient: "Rahul", doctor: "Dr. Reddy", date: "2026-03-25", status: "Pending" },
+  { patient: "Anjali", doctor: "Dr. Sharma", date: "2026-03-26", status: "Completed" },
+  { patient: "Suresh", doctor: "Dr. Mehta", date: "2026-03-27", status: "Scheduled" },
+  { patient: "Meera", doctor: "Dr. Nair", date: "2026-03-28", status: "Pending" }
+])
+
+2.Sorting
+db.patients.find().sort({name:1}) //Asc
+db.patients.find().sort({name:-1}) //desc
+3.Limiting
+db.patients.find().limit(2)
+
+4.Update
+db.patients.updateOne({name:"Helen"},{$set:{city:"Kannur"}})
+5. Delete
+db.patients.deleteOne({name:"Helen"})
+
